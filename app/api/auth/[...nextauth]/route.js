@@ -3,6 +3,7 @@ import GithubProvider from "next-auth/providers/github";
 import PatreonProvider from "next-auth/providers/patreon";
 
 const handler = NextAuth({
+   secret: process.env.NEXTAUTH_SECRET,
    providers: [
       GithubProvider({
          clientId: process.env.GITHUB_CLIENT_ID,
