@@ -14,7 +14,8 @@ const handler = NextAuth({
          authorization: {
             url: process.env.PATREON_AUTHORIZE_URL,
             params: {
-               redirect_uri: "https://www.nightmarecarvings.com",
+               redirect_uri:
+                  "https://www.nightmarecarvings.com/patreon-callback",
                scope: "identity identity.memberships",
                grant_type: "authorization_code",
             },
@@ -30,6 +31,18 @@ const handler = NextAuth({
          },
       }),
    ],
+   callbacks: {
+      async jwt(token, user) {
+         if (user) {
+            token.accessToken = user.accessToken;
+         }
+         return token;
+      },
+      async session(session, token) {
+         session.accessToken = token.accessToken;
+         return session;
+      },
+   },
 });
 
 export { handler as GET, handler as POST };
