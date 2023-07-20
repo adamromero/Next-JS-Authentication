@@ -12,36 +12,12 @@ const handler = NextAuth({
          clientId: process.env.PATREON_CLIENT_ID,
          clientSecret: process.env.PATREON_CLIENT_SECRET,
          authorization: {
-            url: process.env.PATREON_AUTHORIZE_URL,
             params: {
                redirect_uri: "https://www.nightmarecarvings.com",
-               scope: "identity identity.memberships",
-               grant_type: "authorization_code",
             },
-         },
-         token: process.env.PATREON_TOKEN_URL,
-         userinfo: process.env.PATREON_PROFILE_URL,
-         profile: (profile) => {
-            return {
-               id: profile.data.id,
-               name: profile.data.attributes.full_name,
-               image: profile.data.attributes.image_url,
-            };
          },
       }),
    ],
-   callbacks: {
-      async jwt(token, user) {
-         if (user) {
-            token.accessToken = user.accessToken;
-         }
-         return token;
-      },
-      async session(session, token) {
-         session.accessToken = token.accessToken;
-         return session;
-      },
-   },
 });
 
 //wake up vercel
