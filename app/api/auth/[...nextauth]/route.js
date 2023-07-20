@@ -10,7 +10,7 @@ const handler = NextAuth({
       }),
       PatreonProvider({
          authorization: {
-            url: `${process.env.PATREON_AUTHORIZE_URL}?response_type=code`,
+            //url: `${process.env.PATREON_AUTHORIZE_URL}?response_type=code`,
             params: {
                redirect_uri: "https://www.nightmarecarvings.com",
                scope: "identity identity.memberships",
