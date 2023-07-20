@@ -14,8 +14,7 @@ const handler = NextAuth({
          authorization: {
             url: process.env.PATREON_AUTHORIZE_URL,
             params: {
-               redirect_uri:
-                  "https://www.nightmarecarvings.com/patreon-callback",
+               redirect_uri: "https://www.nightmarecarvings.com",
                scope: "identity identity.memberships",
                grant_type: "authorization_code",
             },
@@ -44,7 +43,5 @@ const handler = NextAuth({
       },
    },
 });
-
-//vercel not updating
 
 export { handler as GET, handler as POST };
