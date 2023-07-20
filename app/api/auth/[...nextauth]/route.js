@@ -13,6 +13,18 @@ const handler = NextAuth({
          clientSecret: process.env.PATREON_CLIENT_SECRET,
       }),
    ],
+   callbacks: {
+      async jwt(token, user) {
+         if (user) {
+            token.accessToken = user.accessToken;
+         }
+         return token;
+      },
+      async session(session, token) {
+         session.accessToken = token.accessToken;
+         return session;
+      },
+   },
 });
 
 export { handler as GET, handler as POST };
