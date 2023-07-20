@@ -13,17 +13,25 @@ const handler = NextAuth({
          name: "PATREON",
          type: "oauth",
          version: "2.0",
-         scope: "users pledges-to-me my-campaign",
-         params: { grant_type: "authorization_code" },
-         redirectUrl: "https://www.nightmarecarvings.com",
-         authorizationUrl: `${process.env.PATREON_AUTHORIZE_URL}?response_type=code`,
-         accessTokenUrl: `${process.env.PATREON_TOKEN_URL}`,
-         profileUrl: `${process.env.PATREON_PROFILE_URL}`,
+         authorization: {
+            url: `${process.env.PATREON_AUTHORIZE_URL}?response_type=code`,
+            params: {
+               scope: "identity identity[email] identity.memberships",
+               grant_type: "authorization_code",
+            },
+         },
+         token: {
+            url: `${process.env.PATREON_TOKEN_URL}`,
+         },
+         userinfo: {
+            url: `${process.env.PATREON_PROFILE_URL}`,
+         },
          profile: (profile) => {
             return {
                id: profile.data.id,
                name: profile.data.attributes.full_name,
                email: profile.data.attributes.email,
+               provider: "PATREON",
             };
          },
          clientId: process.env.PATREON_CLIENT_ID,
