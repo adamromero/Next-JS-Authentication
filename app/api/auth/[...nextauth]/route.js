@@ -15,6 +15,7 @@ const handler = NextAuth({
          version: "2.0",
          scope: "users pledges-to-me my-campaign",
          params: { grant_type: "authorization_code" },
+         redirectUri: "https://www.nightmarecarvings.com",
          authorizationUrl: `${process.env.PATREON_AUTHORIZE_URL}?response_type=code`,
          accessTokenUrl: `${process.env.PATREON_TOKEN_URL}`,
          profileUrl: `${process.env.PATREON_PROFILE_URL}`,
