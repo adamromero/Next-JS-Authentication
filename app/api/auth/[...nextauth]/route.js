@@ -44,4 +44,6 @@ const handler = NextAuth({
    },
 });
 
+//wake up vercel
+
 export { handler as GET, handler as POST };
