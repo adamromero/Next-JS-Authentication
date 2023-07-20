@@ -9,6 +9,22 @@ const handler = NextAuth({
          clientSecret: process.env.GITHUB_CLIENT_SECRET,
       }),
       PatreonProvider({
+         id: "patreon",
+         name: "PATREON",
+         type: "oauth",
+         version: "2.0",
+         scope: "users pledges-to-me my-campaign",
+         params: { grant_type: "authorization_code" },
+         authorizationUrl: `${process.env.PATREON_AUTHORIZE_URL}?response_type=code`,
+         accessTokenUrl: `${process.env.PATREON_TOKEN_URL}`,
+         profileUrl: `${process.env.PATREON_PROFILE_URL}`,
+         profile: (profile) => {
+            return {
+               id: profile.data.id,
+               name: profile.data.attributes.full_name,
+               email: profile.data.attributes.email,
+            };
+         },
          clientId: process.env.PATREON_CLIENT_ID,
          clientSecret: process.env.PATREON_CLIENT_SECRET,
       }),
