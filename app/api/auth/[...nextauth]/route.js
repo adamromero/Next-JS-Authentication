@@ -12,14 +12,23 @@ const handler = NextAuth({
          clientId: process.env.PATREON_CLIENT_ID,
          clientSecret: process.env.PATREON_CLIENT_SECRET,
          authorization: {
+            url: process.env.PATREON_AUTHORIZE_URL,
             params: {
                redirect_uri: "https://www.nightmarecarvings.com",
+               scope: "identity identity.memberships",
+               grant_type: "authorization_code",
+            },
+         },
+         token: {
+            url: process.env.PATREON_TOKEN_URL,
+            async request(context) {
+               // context contains useful properties to help you make the request.
+               const tokens = await makeTokenRequest(context);
+               return { tokens };
             },
          },
       }),
    ],
 });
-
-//wake up vercel
 
 export { handler as GET, handler as POST };

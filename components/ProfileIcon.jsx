@@ -11,6 +11,7 @@ export default function ProfileIcon() {
          <div className="flex gap-5">
             <Image
                src={session.user.image}
+               alt={session.user.name}
                width={40}
                height={40}
                className="rounded-full"
