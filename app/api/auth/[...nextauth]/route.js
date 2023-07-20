@@ -16,7 +16,7 @@ const handler = NextAuth({
          authorization: {
             url: `${process.env.PATREON_AUTHORIZE_URL}?response_type=code`,
             params: {
-               request_uri: "https://www.nightmarecarvings.com",
+               redirect_uri: "https://www.nightmarecarvings.com",
                scope: "identity identity[email] identity.memberships",
                grant_type: "authorization_code",
             },
