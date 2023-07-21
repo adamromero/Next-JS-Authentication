@@ -19,28 +19,7 @@ const handler = NextAuth({
                grant_type: "authorization_code",
             },
          },
-         token: {
-            url: process.env.PATREON_TOKEN_URL,
-            async request(context) {
-               // context contains useful properties to help you make the request.
-               const tokens = await makeTokenRequest(context);
-               return { tokens };
-            },
-         },
-         userinfo: {
-            url: process.env.PATREON_PROFILE_URL,
-            async request(context) {
-               // context contains useful properties to help you make the request.
-               return await makeUserinfoRequest(context);
-            },
-         },
-         profile: (profile) => {
-            return {
-               id: profile.data.id,
-               name: profile.data.attributes.full_name,
-               image: profile.data.attributes.image_url,
-            };
-         },
+         token: process.env.PATREON_TOKEN_URL,
       }),
    ],
 });

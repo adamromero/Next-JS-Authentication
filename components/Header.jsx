@@ -3,7 +3,7 @@
 import LoginButton from "./LoginButton";
 import { useSession } from "next-auth/react";
 
-export default function Header() {
+export default function Header({ token }) {
    const { data: session, status } = useSession();
 
    if (status === "authenticated") {
@@ -17,6 +17,7 @@ export default function Header() {
 
    return (
       <div className="flex flex-col items-center justify-center h-screen -mt-16">
+         <div>{token}</div>
          <h1>Login to get started</h1>
          <LoginButton />
       </div>
