@@ -15,7 +15,7 @@ const handler = NextAuth({
             params: {
                redirect_uri:
                   "https://www.nightmarecarvings.com/api/auth/callback/patreon",
-               scope: "identity identity[email] identity.memberships",
+               scope: "identity identity.memberships",
                grant_type: "authorization_code",
             },
          },
@@ -26,10 +26,12 @@ const handler = NextAuth({
             url: `${process.env.PATREON_PROFILE_URL}`,
          },
          profile: (profile) => {
+            console.log(profile);
             return {
                id: profile.data.id,
                name: profile.data.attributes.full_name,
                email: profile.data.attributes.email,
+               image: profile.data.attributes.image,
                provider: "PATREON",
             };
          },
