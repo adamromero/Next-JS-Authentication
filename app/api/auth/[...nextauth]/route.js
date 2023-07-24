@@ -13,7 +13,8 @@ const handler = NextAuth({
          clientSecret: process.env.PATREON_CLIENT_SECRET,
          authorization: {
             params: {
-               redirect_uri: "https://www.nightmarecarvings.com",
+               redirect_uri:
+                  "https://www.nightmarecarvings.com/api/auth/callback/patreon",
                scope: "identity identity.memberships",
                grant_type: "authorization_code",
                response_type: "code",
