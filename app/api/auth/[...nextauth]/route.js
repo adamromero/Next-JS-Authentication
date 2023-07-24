@@ -15,19 +15,22 @@ const handler = NextAuth({
             params: {
                redirect_uri:
                   "https://www.nightmarecarvings.com/api/auth/callback/patreon",
-               scope: "identity identity.memberships",
+               scope: "identity identity[email] identity.memberships",
                grant_type: "authorization_code",
-               response_type: "code",
             },
          },
-         token: "https://www.patreon.com/api/oauth2/token",
-         userinfo: "https://www.patreon.com/api/oauth2/api/current_user",
-         profile(profile) {
+         token: {
+            url: `${process.env.PATREON_TOKEN_URL}`,
+         },
+         userinfo: {
+            url: `${process.env.PATREON_PROFILE_URL}`,
+         },
+         profile: (profile) => {
             return {
                id: profile.data.id,
                name: profile.data.attributes.full_name,
                email: profile.data.attributes.email,
-               image: profile.data.attributes.image_url,
+               provider: "PATREON",
             };
          },
       }),
