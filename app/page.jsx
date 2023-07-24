@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 
 export default async function Home({ searchParams }) {
+   let user;
    if (searchParams.code) {
       const authorizationCode = searchParams.code;
       const clientId = process.env.PATREON_CLIENT_ID;
@@ -25,11 +26,27 @@ export default async function Home({ searchParams }) {
          .then((response) => response.json())
          .then((tokenData) => {
             console.log("token:", tokenData);
+            const accessToken = tokenData.access_token;
+
+            fetch("https://www.patreon.com/api/oauth2/api/current_user", {
+               headers: {
+                  Authorization: `Bearer ${accessToken}`,
+               },
+            })
+               .then((res) => res.json())
+               .then((userData) => {
+                  user = userData;
+               });
          })
          .catch((error) => {
             console.log("Token exchange failed.. Error:", error);
          });
    }
 
-   return <Header />;
+   return (
+      <>
+         <Header />
+         <div>{user}</div>
+      </>
+   );
 }
