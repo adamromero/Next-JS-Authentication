@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 
 export default async function Home({ searchParams }) {
-   let user;
    if (searchParams.code) {
+      console.log(searchParams.code);
       const authorizationCode = searchParams.code;
       const clientId = process.env.PATREON_CLIENT_ID;
       const clientSecret = process.env.PATREON_CLIENT_SECRET;
@@ -35,7 +35,7 @@ export default async function Home({ searchParams }) {
             })
                .then((res) => res.json())
                .then((userData) => {
-                  localStorage.setItem("user", userData);
+                  console.log(userData);
                });
          })
          .catch((error) => {
@@ -46,7 +46,6 @@ export default async function Home({ searchParams }) {
    return (
       <>
          <Header />
-         <div>{user}</div>
       </>
    );
 }
