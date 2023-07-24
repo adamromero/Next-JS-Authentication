@@ -20,6 +20,16 @@ const handler = NextAuth({
                response_type: "code",
             },
          },
+         token: "https://www.patreon.com/api/oauth2/token",
+         userinfo: "https://www.patreon.com/api/oauth2/api/current_user",
+         profile(profile) {
+            return {
+               id: profile.data.id,
+               name: profile.data.attributes.full_name,
+               email: profile.data.attributes.email,
+               image: profile.data.attributes.image_url,
+            };
+         },
       }),
    ],
 });
