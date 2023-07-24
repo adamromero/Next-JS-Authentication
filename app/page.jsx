@@ -27,7 +27,7 @@ export default async function Home({ searchParams }) {
             console.log("token:", tokenData);
          })
          .catch((error) => {
-            console.log("Token exchange failed. Error:", error);
+            console.log("Token exchange failed.. Error:", error);
          });
    }
 
