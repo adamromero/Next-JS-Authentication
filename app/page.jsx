@@ -35,7 +35,7 @@ export default async function Home({ searchParams }) {
             })
                .then((res) => res.json())
                .then((userData) => {
-                  user = userData;
+                  localStorage.setItem("user", userData);
                });
          })
          .catch((error) => {
