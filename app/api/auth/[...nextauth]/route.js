@@ -31,7 +31,7 @@ const handler = NextAuth({
                id: profile.data.id,
                name: profile.data.attributes.full_name,
                email: profile.data.attributes.email,
-               image: profile.data.attributes.image,
+               image: profile.data.attributes.image_url,
                provider: "PATREON",
             };
          },

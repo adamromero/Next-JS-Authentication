@@ -10,6 +10,8 @@ export default function Header() {
       return (
          <div className="flex flex-col items-center justify-center h-screen -mt-16">
             <h1>Welcome,</h1>
+            <h2>ID: {session.user.id}</h2>
+            <h3>Email: {session.user.email}</h3>
             <span className="font-bold text-2xl">{session.user.name}</span>
          </div>
       );
