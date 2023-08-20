@@ -13,6 +13,11 @@ const handler = NextAuth({
       PatreonProvider({
          clientId: process.env.PATREON_CLIENT_ID,
          clientSecret: process.env.PATREON_CLIENT_SECRET,
+         authorization: {
+            params: {
+               scope: "identity identity[email] identity.memberships",
+            },
+         },
       }),
    ],
    adapter: MongoDBAdapter(clientPromise),
@@ -22,6 +27,7 @@ const handler = NextAuth({
    jwt: {
       secret: process.env.JWT_SECRET,
    },
+   secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
