@@ -37,8 +37,18 @@ const handler = NextAuth({
          return token;
       },
       async session({ token, session }) {
+         const response = await fetch("https://api.github.com/user", {
+            headers: {
+               Authorization: `Bearer ${token.accessToken}`,
+            },
+         });
+         const json = await response.json();
+
+         console.log(json.following);
+
          if (token) {
             session.user.id = token.id;
+            session.user.following = json.following;
          }
          return session;
       },
