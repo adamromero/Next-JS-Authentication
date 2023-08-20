@@ -9,17 +9,17 @@ export default function ProfileIcon() {
    if (status === "authenticated") {
       return (
          <div className="flex gap-5">
-            {/* <Image
+            <Image
                src={session.user.image}
                alt={session.user.name}
                width={40}
                height={40}
                className="rounded-full"
-            /> */}
+            />
             <button onClick={() => signOut()}>Sign Out</button>
          </div>
       );
    }
 
-   return <button onClick={() => signIn("patreon")}>Sign In</button>;
+   return null;
 }
