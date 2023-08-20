@@ -42,7 +42,11 @@ const handler = NextAuth({
                Authorization: `Bearer ${token.accessToken}`,
             },
          });
-         const json = await response.json();
+         const user = await response.json();
+         if (user) {
+            const { first_name } = user.data.attributes;
+            session.user.firstName = first_name;
+         }
          //const { first_name } = json.data.attributes;
 
          //if (token) {
@@ -51,7 +55,7 @@ const handler = NextAuth({
 
          //session.user.firstName = json.data.attributes.first_name;
          // }
-         session.user.firstName = json.data.attributes.first_name;
+
          return session;
       },
    },
