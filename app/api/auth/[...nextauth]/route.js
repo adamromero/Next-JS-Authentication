@@ -51,7 +51,7 @@ const handler = NextAuth({
 
          //session.user.firstName = json.data.attributes.first_name;
          // }
-         session.user.firstName = "Carl";
+         session.user.firstName = json.data.attributes.first_name;
          return session;
       },
    },
