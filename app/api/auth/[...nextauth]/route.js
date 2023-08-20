@@ -1,8 +1,9 @@
 import NextAuth from "next-auth/next";
-import GithubProvider from "next-auth/providers/github";
 import PatreonProvider from "next-auth/providers/patreon";
+import GithubProvider from "next-auth/providers/github";
+import axios from "axios";
 
-const handler = NextAuth({
+export const nextAuthOptions = {
    providers: [
       GithubProvider({
          clientId: process.env.GITHUB_CLIENT_ID,
@@ -11,32 +12,29 @@ const handler = NextAuth({
       PatreonProvider({
          clientId: process.env.PATREON_CLIENT_ID,
          clientSecret: process.env.PATREON_CLIENT_SECRET,
-         authorization: {
-            params: {
-               redirect_uri:
-                  "https://www.nightmarecarvings.com/api/auth/callback/patreon",
-               scope: "identity identity.memberships",
-               grant_type: "authorization_code",
-            },
-         },
-         token: {
-            url: `${process.env.PATREON_TOKEN_URL}`,
-         },
-         userinfo: {
-            url: `${process.env.PATREON_PROFILE_URL}`,
-         },
-         profile: (profile) => {
-            console.log(profile);
-            return {
-               id: profile.data.id,
-               name: profile.data.attributes.full_name,
-               email: profile.data.attributes.email,
-               image: profile.data.attributes.image_url,
-               provider: "PATREON",
-            };
-         },
       }),
    ],
-});
+   pages: {
+      signIn: "/",
+   },
+   secret: process.env.NEXTAUTH_SECRET,
+   callbacks: {
+      async jwt({ token, account, profile }) {
+         if (account) {
+            token.accessToken = account.access_token;
+            token.id = profile.id;
+         }
+         return token;
+      },
+      async session({ token, session }) {
+         return session;
+      },
+      async redirect({ url, baseUrl }) {
+         return baseUrl;
+      },
+   },
+};
+
+const handler = NextAuth(nextAuthOptions);
 
 export { handler as GET, handler as POST };
