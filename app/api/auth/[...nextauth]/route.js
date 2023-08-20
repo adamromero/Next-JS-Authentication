@@ -43,7 +43,7 @@ const handler = NextAuth({
             },
          });
          const json = await response.json();
-         const { first_name } = json.data.attributes;
+         //const { first_name } = json.data.attributes;
 
          //if (token) {
          //session.user.id = token.id;
@@ -51,6 +51,7 @@ const handler = NextAuth({
 
          //session.user.firstName = json.data.attributes.first_name;
          // }
+         session.user.firstName = "Carl";
          return session;
       },
    },
