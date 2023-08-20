@@ -37,7 +37,7 @@ const handler = NextAuth({
          return token;
       },
       async session({ token, session }) {
-         const response = await fetch(PATREON_PROFILE_URL, {
+         const response = await fetch(process.env.PATREON_PROFILE_URL, {
             headers: {
                Authorization: `Bearer ${token.accessToken}`,
             },
