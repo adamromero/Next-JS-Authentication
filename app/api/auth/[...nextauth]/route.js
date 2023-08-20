@@ -37,18 +37,17 @@ const handler = NextAuth({
          return token;
       },
       async session({ token, session }) {
-         const response = await fetch("https://api.github.com/user", {
+         const response = await fetch(PATREON_PROFILE_URL, {
             headers: {
                Authorization: `Bearer ${token.accessToken}`,
             },
          });
          const json = await response.json();
-
-         console.log(json.following);
+         const { first_name } = json.data.attributes;
 
          if (token) {
             session.user.id = token.id;
-            session.user.following = json.following;
+            session.user.firstName = first_name;
          }
          return session;
       },
