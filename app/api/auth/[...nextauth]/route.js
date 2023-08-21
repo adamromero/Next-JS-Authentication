@@ -37,26 +37,28 @@ const handler = NextAuth({
          return token;
       },
       async session({ token, session }) {
-         const response = await fetch(process.env.PATREON_PROFILE_URL, {
-            headers: {
-               Authorization: `Bearer ${token.accessToken}`,
-            },
-         });
-         const user = await response.json();
+         // const response = await fetch(process.env.PATREON_PROFILE_URL, {
+         //    headers: {
+         //       Authorization: `Bearer ${token.accessToken}`,
+         //    },
+         // });
+         // const user = await response.json();
 
          //patreon
-         if (user) {
-            //const { first_name } = user.data.attributes;
-            const id = user.data;
-            const firstName = "Wilford";
-            session.user.firstName = firstName;
-         }
+         // if (user) {
+         //    const { first_name } = user.data.attributes;
+         //    const firstName = "Wilford";
+         //    session.user.firstName = firstName;
+         // }
 
          //github
          // if (user) {
          //    const { following } = user;
          //    session.user.following = following;
          // }
+         if (token) {
+            session.user.id = token.id;
+         }
 
          return session;
       },
