@@ -47,7 +47,7 @@ const handler = NextAuth({
          //patreon
          if (user) {
             //const { first_name } = user.data.attributes;
-            const id = user.data.id;
+            const id = user.data;
             const firstName = "Wilford";
             session.user.firstName = firstName;
          }
