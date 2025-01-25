@@ -1,4 +1,8 @@
+import connectDB from "@/lib/connectDB";
+import Movie from "@/models/movieModel";
 import { NextResponse } from "next/server";
+
+connectDB();
 
 const extractTitle = (input) => {
    const match = input.match(/^(.*?)(?: \((\d{4})\)| S\d{2}E\d{2})/);
@@ -25,22 +29,22 @@ export async function POST(req, res) {
          //set links.patreon to url
          //set publishedAt to published_at
          if (year) {
-            // await Movie.find(
-            //    {
-            //       "data.Title": extractedTitle,
-            //       "data.Year": year,
-            //       "data.Type": "movie",
-            //       hasReacted: false,
-            //       hasSeen: false,
-            //    },
-            //    {
-            //       $set: {
-            //          hasReacted: true,
-            //          "links.patreon": url,
-            //          publishedAt: published_at,
-            //       },
-            //    }
-            // );
+            await Movie.find(
+               {
+                  "data.Title": extractedTitle,
+                  "data.Year": year,
+                  "data.Type": "movie",
+                  hasReacted: false,
+                  hasSeen: false,
+               },
+               {
+                  $set: {
+                     hasReacted: true,
+                     "links.patreon": url,
+                     publishedAt: published_at,
+                  },
+               }
+            );
             console.log({
                title: extractedTitle,
                year,
@@ -55,21 +59,21 @@ export async function POST(req, res) {
             //set hasReacted to true
             //set links.patreon to url
             //set publishedAt to published_at
-            // await Movie.find(
-            //    {
-            //       "data.Title": extractedTitle,
-            //       "data.Type": "tv",
-            //       hasReacted: false,
-            //       hasSeen: false,
-            //    },
-            //    {
-            //       $set: {
-            //          hasReacted: true,
-            //          "links.patreon": url,
-            //          publishedAt: published_at,
-            //       },
-            //    }
-            // );
+            await Movie.find(
+               {
+                  "data.Title": extractedTitle,
+                  "data.Type": "tv",
+                  hasReacted: false,
+                  hasSeen: false,
+               },
+               {
+                  $set: {
+                     hasReacted: true,
+                     "links.patreon": url,
+                     publishedAt: published_at,
+                  },
+               }
+            );
             console.log({
                title: extractedTitle,
                url,
