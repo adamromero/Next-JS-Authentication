@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
+   const request = req;
+   console.log(request);
+   console.log(request.body);
    return NextResponse.json({
-      message: "the webhook has been triggered by publishing a post!",
+      message: "hello there",
    });
 }
