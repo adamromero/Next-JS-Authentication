@@ -42,7 +42,7 @@ export async function POST(req, res) {
             //    }
             // );
             console.log({
-               title: extractTitle,
+               title: extractedTitle,
                year,
                url,
                published_at,
@@ -70,7 +70,12 @@ export async function POST(req, res) {
             //       },
             //    }
             // );
-            console.log({ title: extractTitle, url, published_at, type: "tv" });
+            console.log({
+               title: extractedTitle,
+               url,
+               published_at,
+               type: "tv",
+            });
          }
       }
    }
