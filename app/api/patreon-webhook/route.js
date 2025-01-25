@@ -20,7 +20,7 @@ export async function POST(req) {
       const { title, url, published_at } = request.data.attributes;
 
       if (!title || !url || !published_at) {
-         return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+         // return NextResponse.json({ error: "Invalid input" }, { status: 400 });
       }
 
       if (title.includes("Full Length Reaction")) {
@@ -51,18 +51,20 @@ export async function POST(req) {
                },
             };
 
-            const result = await Movie.updateOne(filter, update);
+            console.log(filter, update);
 
-            if (result.modifiedCount > 0) {
-               return NextResponse.json({
-                  message: "Document updated successfully",
-               });
-            } else {
-               return NextResponse.json(
-                  { message: "No matching document found" },
-                  { status: 404 }
-               );
-            }
+            // const result = await Movie.updateOne(filter, update);
+
+            //if (result.modifiedCount > 0) {
+            return NextResponse.json({
+               message: "Document updated successfully",
+            });
+            // } else {
+            //    return NextResponse.json(
+            //       { message: "No matching document found" },
+            //       { status: 404 }
+            //    );
+            // }
          }
       }
 
