@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 
 const extractTitle = (input) => {
-   const match = input.match(/^(.*?) \((\d{4})\)/);
-   return match ? match[1] : "";
+   const match = input.match(/^(.*?)(?: \((\d{4})\)| S\d{2}E\d{2})/);
+   return match ? match[1].trim() : "";
 };
 
 const extractYear = (input) => {
    const match = input.match(/^(.*?) \((\d{4})\)/);
-   return match ? match[2] : "";
+   return match ? match[2].trim() : "";
 };
 
 export async function POST(req, res) {
@@ -15,8 +15,8 @@ export async function POST(req, res) {
    const { title, url, published_at } = request.data.attributes;
 
    if (title.includes("Full Length Reaction")) {
-      const extractedTitle = extractTitle(title).trim();
-      const year = extractYear(title).trim();
+      const extractedTitle = extractTitle(title);
+      const year = extractYear(title);
       if (extractedTitle) {
          //query mongodb movies collection using parsedTitle and year
          //check that the data.Type is "movie"
