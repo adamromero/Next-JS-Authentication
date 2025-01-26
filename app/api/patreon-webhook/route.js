@@ -17,8 +17,8 @@ const extractYear = (input) => {
 export async function POST(req) {
    try {
       const request = await req.json();
-      //const { title, url, published_at } = request.data.attributes;
-      const { title, url, published_at } = request;
+      const { title, url, published_at } = request.data.attributes;
+      //const { title, url, published_at } = request;
 
       if (!title || !url || !published_at) {
          return NextResponse.json({ error: "Invalid input" }, { status: 400 });
