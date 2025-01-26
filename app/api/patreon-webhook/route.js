@@ -17,10 +17,11 @@ const extractYear = (input) => {
 export async function POST(req) {
    try {
       const request = await req.json();
-      const { title, url, published_at } = request.data.attributes;
+      //const { title, url, published_at } = request.data.attributes;
+      const { title, url, published_at } = request;
 
       if (!title || !url || !published_at) {
-         // return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+         return NextResponse.json({ error: "Invalid input" }, { status: 400 });
       }
 
       if (title.includes("Full Length Reaction")) {
@@ -46,25 +47,25 @@ export async function POST(req) {
             const update = {
                $set: {
                   hasReacted: true,
-                  "links.patreon": url,
+                  "links.patreon": `https://www.patreon.com${url}`,
                   publishedAt: published_at,
                },
             };
 
-            console.log(filter, update);
+            console.log(extractedTitle, year, url, published_at);
 
-            // const result = await Movie.updateOne(filter, update);
+            const result = await Movie.updateOne(filter, update);
 
-            //if (result.modifiedCount > 0) {
-            return NextResponse.json({
-               message: "Document updated successfully",
-            });
-            // } else {
-            //    return NextResponse.json(
-            //       { message: "No matching document found" },
-            //       { status: 404 }
-            //    );
-            // }
+            if (result.modifiedCount > 0) {
+               return NextResponse.json({
+                  message: "Document updated successfully",
+               });
+            } else {
+               return NextResponse.json(
+                  { message: "No matching document found" },
+                  { status: 404 }
+               );
+            }
          }
       }
 
