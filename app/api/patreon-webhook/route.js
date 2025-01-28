@@ -18,13 +18,12 @@ export async function POST(req) {
    try {
       const request = await req.json();
       const { title, url, published_at } = request.data.attributes;
-      //const { title, url, published_at } = request;
 
       if (!title || !url || !published_at) {
          return NextResponse.json({ error: "Invalid input" }, { status: 400 });
       }
 
-      if (title.includes("Full Length Reaction")) {
+      if (title.toLowerCase().includes("full length reaction")) {
          const extractedTitle = extractTitle(title);
          const year = extractYear(title);
 
@@ -60,11 +59,6 @@ export async function POST(req) {
                return NextResponse.json({
                   message: "Document updated successfully",
                });
-            } else {
-               return NextResponse.json(
-                  { message: "No matching document found" },
-                  { status: 404 }
-               );
             }
          }
       }
