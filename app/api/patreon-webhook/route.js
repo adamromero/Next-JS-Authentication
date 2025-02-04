@@ -20,7 +20,10 @@ export async function POST(req) {
       const { title, url, published_at } = request.data.attributes;
 
       if (!title || !url || !published_at) {
-         return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+         return NextResponse.json(
+            { message: "Invalid input, no action performed" },
+            { status: 200 }
+         );
       }
 
       if (title.toLowerCase().includes("full length reaction")) {
@@ -33,19 +36,20 @@ export async function POST(req) {
                     "data.Title": extractedTitle,
                     "data.Year": year,
                     "data.Type": "movie",
-                    hasReacted: false,
+                    "links.patreon": "",
                     hasSeen: false,
                  }
                : {
                     "data.Title": extractedTitle,
                     "data.Type": "tv",
-                    hasReacted: false,
+                    "links.patreon": "",
                     hasSeen: false,
                  };
 
             const update = {
                $set: {
                   hasReacted: true,
+                  isRewatch: false,
                   "links.patreon": `https://www.patreon.com${url}`,
                   publishedAt: published_at,
                },
