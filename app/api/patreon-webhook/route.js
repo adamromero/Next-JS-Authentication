@@ -34,22 +34,21 @@ export async function POST(req) {
             const filter = year
                ? {
                     "data.Title": extractedTitle,
-                    "data.Year": year,
+                    "data.Year": { $in: [year, year + 1] },
                     "data.Type": "movie",
                     "links.patreon": "",
-                    hasSeen: false,
                  }
                : {
                     "data.Title": extractedTitle,
                     "data.Type": "tv",
                     "links.patreon": "",
-                    hasSeen: false,
                  };
 
             const update = {
                $set: {
                   hasReacted: true,
                   isRewatch: false,
+                  hasSeen: false,
                   "links.patreon": `https://www.patreon.com${url}`,
                   publishedAt: published_at,
                },
