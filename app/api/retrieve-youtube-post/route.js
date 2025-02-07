@@ -4,9 +4,12 @@ import xml2js from "xml2js";
 export async function POST(req) {
    try {
       const xmlData = await req.text();
+      console.log(xmlData);
 
       const parser = new xml2js.Parser({ explicitArray: false });
       const jsonData = await parser.parseStringPromise(xmlData);
+
+      console.log(jsonData);
 
       const entry = jsonData?.feed?.entry;
       if (!entry) {
