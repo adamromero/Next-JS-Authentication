@@ -17,14 +17,14 @@ export async function POST(req) {
          );
       }
 
+      console.log(entry);
+
       const videoId = entry["yt:videoId"];
       const title = entry["title"];
-      const description = entry["media:group"]["media:description"];
 
       console.log(`New Video Uploaded!`);
       console.log(`Video ID: ${videoId}`);
       console.log(`Title: ${title}`);
-      console.log(`Description: ${description}`);
 
       return NextResponse.json(
          { message: "Notification received" },
