@@ -34,7 +34,9 @@ export async function POST(req) {
             const filter = year
                ? {
                     "data.Title": extractedTitle,
-                    "data.Year": { $in: [year, year + 1] },
+                    "data.Year": {
+                       $in: [year, String(parseInt(year, 10) + 1)],
+                    },
                     "data.Type": "movie",
                     "links.patreon": "",
                  }
@@ -54,10 +56,7 @@ export async function POST(req) {
                },
             };
 
-            console.log(extractedTitle, year, url, published_at);
-
             const result = await Movie.updateOne(filter, update);
-
             if (result.modifiedCount > 0) {
                return NextResponse.json({
                   message: "Document updated successfully",
