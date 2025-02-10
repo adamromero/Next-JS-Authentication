@@ -39,11 +39,13 @@ export async function POST(req) {
                     },
                     "data.Type": "movie",
                     "links.patreon": "",
+                    publishedAt: null,
                  }
                : {
                     "data.Title": { $regex: extractedTitle, $options: "i" },
                     "data.Type": "tv",
                     "links.patreon": "",
+                    publishedAt: null,
                  };
 
             const update = {
@@ -56,8 +58,12 @@ export async function POST(req) {
                },
             };
 
+            console.log(filter, update);
+
             const result = await Movie.updateOne(filter, update);
             if (result.modifiedCount > 0) {
+               console.log("Document updated successfully");
+               console.log(result);
                return NextResponse.json({
                   message: "Document updated successfully",
                });
